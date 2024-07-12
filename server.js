@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
   console.log("A user connected");
 
   socket.on("message", (message) => {
-    socket.emit("message", `${Date.now()} : ${{ message }}`);
+    socket.emit("message", message);
   });
 
   socket.on("disconnect", () => {
