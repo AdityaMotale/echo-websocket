@@ -16,15 +16,23 @@ const io = new Server(server, {
 });
 
 app.get("/", (_, res) => {
-  res.send("echo websocket server");
+  res.send("websocket service for echo chat");
 });
 
 io.on("connection", (socket) => {
+  console.log("A user connected");
+
   socket.on("message", (message) => {
-    socket.emit("message", `${Date.now()}:${message}`);
+    socket.emit("message", `${Date.now()} : ${message}`);
   });
 
-  socket.on("disconnect", () => {});
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
 });
 
-module.exports = server;
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
