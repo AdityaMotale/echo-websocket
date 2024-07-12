@@ -1,10 +1,19 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+
+app.use(cors());
+
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Just to get things working!
+    methods: ["GET", "POST"],
+  },
+});
 
 app.get("/", (_, res) => {
   res.send("echo websocket server");
